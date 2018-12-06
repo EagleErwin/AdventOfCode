@@ -31,7 +31,7 @@ procedure Day6_2 is
       end if;
 
       X_String := To_Unbounded_String(Slice(Input, 1, X_Length));
-      Y_String := To_Unbounded_String(Slice(Input, 3 + X_Length, Length(Input) - 3 + X_Length));
+      Y_String := To_Unbounded_String(Slice(Input, 3 + X_Length, Length(Input)));
       
       X := Integer'Value(To_String(X_String));
       Y := Integer'Value(To_String(Y_String));
