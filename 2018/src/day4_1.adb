@@ -140,7 +140,7 @@ procedure Day4_1 is
    end Get_Best_Guard;
    
    function Get_Best_Minute (Input: in Guard) return Integer is
-      type Clock is array (1 .. 60) of Integer;
+      type Clock is array (0 .. 59) of Integer;
       Administration : Clock := (others => 0);
       Best_Minute : Integer := 0;
       Longest_Nap : Integer := 0;
