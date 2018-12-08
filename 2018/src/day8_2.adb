@@ -9,14 +9,16 @@ procedure Day8_2 is
    type Node;
    type Access_Node is access all Node;
    
-   subtype Metadata is Integer range -1..100; -- -1 is used for no_data
+   subtype Metadata is Integer range 0..100;
    type Metadata_Array is array (1 .. Max_Metadata_Numbers) of Metadata;
    type Leaf_Array is array (1 .. Max_Number_Of_Leafs) of Access_Node;
                              
    type Node is record
       Value : Integer;
-      Data : Metadata_Array;
+      Number_Of_Leafs : Integer;
       Leafs : Leaf_Array;
+      Number_Of_Metadata : Integer;
+      Data : Metadata_Array;
    end record;
 
    procedure Load_File (Data : out Data_Line) is
@@ -70,49 +72,17 @@ procedure Day8_2 is
       return Sum + Get_Metadata_For_One_Node(Input);
    end Get_Total_Metadata;
    
-   function Get_Number_Of_Leafs(Subject : in Access_Node) return Integer is
-      Total : Integer := 0;
-   begin
-      Summation_Loop:
-      for I in Subject.Leafs'Range loop
-         if Subject.Leafs(I) /= null then
-            Total := Total + 1;
-         else
-            exit Summation_loop;
-         end if;
-      end loop Summation_Loop;
-      return Total;
-   end Get_Number_Of_Leafs;
-   
-   function Get_Number_Of_Metadata(Subject : in Access_Node) return Integer is
-      Total : Integer := 0;
-   begin
-      Summation_Loop:
-      for I in Subject.Data'Range loop
-         if Subject.Data(I) /= -1 then
-            Total := Total + 1;
-         else
-            exit Summation_loop;
-         end if;
-      end loop Summation_Loop;
-      return Total;
-   end Get_Number_Of_Metadata;
-   
    function Get_Node_Value(Subject : in Access_Node) return Integer is
-      Num_Leafs : Integer;
-      Num_Metadata : Integer;
       Index : Integer;
       Result : Integer := 0;
    begin
-      Num_Leafs := Get_Number_Of_Leafs(Subject);
-      Num_Metadata := Get_Number_Of_Metadata(Subject);
-      if Num_Leafs = 0 then
+      if Subject.Number_Of_Leafs = 0 then
          Result := Get_Metadata_For_One_Node(Subject);
       else
          Get_Value_From_Leafs:
-         for I in Integer range 1 .. Num_Metadata loop
+         for I in Integer range 1 .. Subject.Number_Of_Metadata loop
             Index := Subject.Data(I);
-            if Num_Leafs >= Index then
+            if Subject.Number_Of_Leafs >= Index then
                Result := Result + Get_Node_Value(Subject.Leafs(Index));
             end if;
          end loop Get_Value_From_Leafs;
@@ -123,7 +93,11 @@ procedure Day8_2 is
    function Get_Node(Input_String : in out Unbounded_String) return Access_Node is
       Num_Child_Nodes : Integer;
       Num_Metadata_Entries : Integer;
-      Result : Access_Node := new Node'(Value => 0, Data => (others => -1), Leafs => (others => null));
+      Result : Access_Node := new Node'(Value => 0,
+                                        Number_Of_Leafs => 0,
+                                        Leafs => (others => null),
+                                        Number_Of_Metadata => 0,
+                                        Data => (others => 0));
    begin
       Num_Child_Nodes := Get_Next_Number(Input_String => Input_String);
       Num_Metadata_Entries := Get_Next_Number(Input_String => Input_String);
@@ -131,11 +105,12 @@ procedure Day8_2 is
       for I in Integer range 1 .. Num_Child_Nodes loop
          Result.Leafs(I) := Get_Node(Input_String => Input_String);
       end loop Get_Child_Nodes;
+      Result.Number_Of_Leafs := Num_Child_Nodes;
       Get_Metadata:
       for I in Integer range 1 .. Num_Metadata_Entries loop
          Result.Data(I) := Get_Next_Number(Input_String => Input_String);
       end loop Get_Metadata; 
-      
+      Result.Number_Of_Metadata := Num_Metadata_Entries;
       -- Determine the value
       Result.Value := Get_Node_Value(Result);
       return Result;
