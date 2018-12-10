@@ -2,11 +2,11 @@ with Ada.Text_IO;              use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
 
-procedure Day1_1 is
+procedure Day01_1 is
    Input  : File_Type;
    Answer : Integer := 0;
 begin
-   Open (File => Input, Mode => In_File, Name => "data/day1.input");
+   Open (File => Input, Mode => In_File, Name => "data/day01.input");
    loop
       declare
          Frequency : Integer;
@@ -24,4 +24,4 @@ exception
       end if;
 
       Put_Line (Integer'Image (Answer));
-end Day1_1;
+end Day01_1;

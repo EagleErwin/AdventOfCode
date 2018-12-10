@@ -2,7 +2,7 @@ with Ada.Text_IO;              use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
 
-procedure Day1_2 is 
+procedure Day01_2 is 
    Data_Line_Amount : constant Integer := 1040; -- Number of lines in the dataset
    Min_Intermediate : constant Integer := -1000000;
    Max_Intermediate : constant Integer := 1000000;
@@ -18,7 +18,7 @@ procedure Day1_2 is
       Input             : File_Type;
       Row_Idx           : Integer := 0;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day1.input");
+      Open (File => Input, Mode => In_File, Name => "data/day01.input");
       while not End_Of_File (Input) loop
          Current_Line      := To_Unbounded_String (Get_Line (Input));
          Current_Frequency := Integer'Value (To_String (Current_Line));
@@ -53,4 +53,4 @@ begin
    while not Do_Loop(Administration, Input_Data, Frequency) loop
       Put_Line("Not finished, looping around. Starting with " & Integer'Image(Frequency));
    end loop;
-end Day1_2;
+end Day01_2;

@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day7_1 is
+procedure Day07_1 is
    Data_Line_Amount : constant Integer := 101; -- Number of lines in the dataset
    Blocker_Pos : constant Integer := 6;
    Waiter_Pos : constant Integer := 37;
@@ -25,7 +25,7 @@ procedure Day7_1 is
       Input          : File_Type;
       Row_Idx        : Integer := 0;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day7.input");
+      Open (File => Input, Mode => In_File, Name => "data/day07.input");
       while not End_Of_File (Input) loop
          Current_Line   := To_Unbounded_String (Get_Line (Input));
          Current_Record := (Blocker => Element(Current_Line, Blocker_Pos),
@@ -136,4 +136,4 @@ begin
    end loop Outer;
    
    Put_Line("Final result: " & Answer);
-end Day7_1;
+end Day07_1;

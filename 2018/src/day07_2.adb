@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day7_2 is
-   File_Name : constant String := "data/day7.input";
+procedure Day07_2 is
+   File_Name : constant String := "data/day07.input";
    
    Blocker_Pos : constant Integer := 6; --Character position of the blocker in the input string
    Waiter_Pos : constant Integer := 37; --Character position of the blocked in the input string
@@ -202,4 +202,4 @@ begin
    
    Answer := Current_Time - 1;
    Put_Line("Final result: " & Integer'Image(Answer));
-end Day7_2;
+end Day07_2;

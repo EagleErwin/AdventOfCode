@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day9_2 is
+procedure Day09_2 is
    Magic_Number : constant Integer := 23;
    Removal_Constant : constant Integer := 7;
    type Marble;
@@ -43,7 +43,7 @@ procedure Day9_2 is
       Input : File_Type;
       Data  : Unbounded_String;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day9.input");
+      Open (File => Input, Mode => In_File, Name => "data/day09.input");
       Data := To_Unbounded_String (Get_Line (Input));
       Close (File => Input);
       
@@ -167,4 +167,4 @@ begin
    end The_Game;
    
    Put_Line("Final result:" & Long_Integer'Image(Answer));
-end Day9_2;
+end Day09_2;

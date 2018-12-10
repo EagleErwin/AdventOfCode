@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day3_2 is
+procedure Day03_2 is
    Data_Line_Amount : constant Integer := 1357; -- Number of lines in the dataset
    Max_Fabric_Width : constant Integer := 1000; -- Can be less
    Max_Fabric_Height : constant Integer := 1000; -- Can be less
@@ -133,7 +133,7 @@ procedure Day3_2 is
       Input          : File_Type;
       Row_Idx        : Integer := 0;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day3.input");
+      Open (File => Input, Mode => In_File, Name => "data/day03.input");
       while not End_Of_File (Input) loop
          Current_Line   := To_Unbounded_String (Get_Line (Input));
          Current_Record := (Claim_Id => Get_Claim_Id(Line => Current_Line),
@@ -202,4 +202,4 @@ begin
    end loop;
       
    
-end Day3_2;
+end Day03_2;

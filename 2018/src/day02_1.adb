@@ -1,5 +1,5 @@
 with Ada.Text_IO;              use Ada.Text_IO;
-procedure Day2_1 is
+procedure Day02_1 is
    Data_Line_Length : constant Integer := 26; -- Number of characters on one line
    Data_Line_Amount : constant Integer := 250; -- Number of lines in the dataset
    subtype Data_Line is String(1 .. Data_Line_Length);
@@ -11,7 +11,7 @@ procedure Day2_1 is
       Input  : File_Type;
       Row_Idx : Integer := 0;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day2.input");
+      Open (File => Input, Mode => In_File, Name => "data/day02.input");
       while not End_Of_File (Input) loop
          Current_Line := Get_Line(Input);
          Row_Idx := Row_Idx + 1;
@@ -61,4 +61,4 @@ begin
    Put_Line("Twos: " & Integer'Image(Total_Twos) & "; Threes: " & Integer'Image(Total_Threes));
    Answer := Total_Twos * Total_Threes;
    Put_Line("Checksum: " & Integer'Image(Answer));
-end Day2_1;
+end Day02_1;

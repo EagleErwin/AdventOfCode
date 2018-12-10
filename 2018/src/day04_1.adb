@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
 with Ada.Containers.Generic_Array_Sort; use Ada.Containers;
-procedure Day4_1 is
+procedure Day04_1 is
    Data_Line_Amount : constant Integer := 1159; -- Number of lines in the dataset
    Max_Number_Of_Guards : Integer := 3500; -- Will be less
    Max_Number_Of_Sleeps : Integer := 60; -- Will be when guard falls asleep every minute
@@ -37,7 +37,7 @@ procedure Day4_1 is
       Input          : File_Type;
       Row_Idx        : Integer := 0;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day4.input");
+      Open (File => Input, Mode => In_File, Name => "data/day04.input");
       while not End_Of_File (Input) loop
          Current_Line   := To_Unbounded_String (Get_Line (Input));
          Row_Idx        := Row_Idx + 1;
@@ -181,4 +181,4 @@ begin
    
    Answer := Best_Guard.Id * Best_Minute;
    Put_Line("Answer: " & Integer'Image(Answer));
-end Day4_1;
+end Day04_1;
