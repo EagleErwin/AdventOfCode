@@ -80,8 +80,8 @@ procedure Day11_2 is
    begin
       for N in Integer range 1 .. 300 loop
          Put_Line("Finding best area of size" & Integer'Image(N));
-         for I in Integer range 1 .. 300 loop
-            for J in Integer range 1 .. 300 loop
+         for I in Integer range 1 .. 300 - (N-1) loop
+            for J in Integer range 1 .. 300 - (N-1) loop
                Current_Power_Level := Calculate_Area_Power(Power_Supply, I, J, N);
                if Current_Power_Level > Best_Power_Level then
                   Best_X := I;
