@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day5_2 is
+procedure Day05_2 is
    Initial_String_Length : constant Integer := 50000;
    ASCII_Distance : constant Integer := 32;
    Letters_In_Alphabet : constant Integer := 26;
@@ -11,7 +11,7 @@ procedure Day5_2 is
    procedure Load_File (Data : out Unbounded_String) is
       Input : File_Type;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day5.input");
+      Open (File => Input, Mode => In_File, Name => "data/day05.input");
       Data  := To_Unbounded_String (Get_Line (Input));
       Close (File => Input);
    end Load_File;
@@ -86,4 +86,4 @@ begin
    end loop;
    
    Put_line(Integer'Image(Shortest));
-end Day5_2;
+end Day05_2;

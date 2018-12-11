@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day8_2 is
+procedure Day08_2 is
    Max_Number_Of_Leafs : constant Integer := 25; --Estimation
    Max_Metadata_Numbers : constant Integer := 25; --Estimation
    subtype Data_Line is Unbounded_String;
@@ -24,7 +24,7 @@ procedure Day8_2 is
    procedure Load_File (Data : out Data_Line) is
       Input        : File_Type;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day8.input");
+      Open (File => Input, Mode => In_File, Name => "data/day08.input");
       Data := To_Unbounded_String (Get_Line (Input));
       
       Close (File => Input);
@@ -126,4 +126,4 @@ begin
    Answer := Get_Node_Value(Root);
    
    Put_Line("Final result: " & Integer'Image(Answer));
-end Day8_2;
+end Day08_2;

@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day6_2 is
+procedure Day06_2 is
    Data_Line_Amount : constant Integer := 50; -- Number of lines in the dataset
    City_Dimension : constant Integer := 350;
    Maximum_Distance : constant Integer := 10000;
@@ -44,7 +44,7 @@ procedure Day6_2 is
       Input_Building : Building;
       X_Idx, Y_Idx   : Integer;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day6.input");
+      Open (File => Input, Mode => In_File, Name => "data/day06.input");
       while not End_Of_File (Input) loop
          Current_Line   := To_Unbounded_String (Get_Line (Input));
          Get_Coordinates(Current_Line, X_Idx, Y_Idx);
@@ -103,4 +103,4 @@ begin
    end loop;
    
    Put_Line(Integer'Image(Answer));
-end Day6_2;
+end Day06_2;

@@ -1,14 +1,14 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Ada.Text_IO.Unbounded_IO; use Ada.Text_IO.Unbounded_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day5_1 is
+procedure Day05_1 is
    Initial_String_Length : constant Integer := 50000;
    ASCII_Distance : constant Integer := 32;
          
    procedure Load_File (Data : out Unbounded_String) is
       Input : File_Type;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day5.input");
+      Open (File => Input, Mode => In_File, Name => "data/day05.input");
       Data  := To_Unbounded_String (Get_Line (Input));
       Close (File => Input);
    end Load_File;
@@ -51,4 +51,4 @@ begin
    Clash(Input_String);
    Put_Line(Integer'Image(Length(Input_String)));
 
-end Day5_1;
+end Day05_1;

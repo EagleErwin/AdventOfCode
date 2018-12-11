@@ -1,5 +1,5 @@
 with Ada.Text_IO; use Ada.Text_IO;
-procedure Day2_2 is
+procedure Day02_2 is
    Data_Line_Length : constant Integer :=
      26; -- Number of characters on one line
    Data_Line_Amount : constant Integer :=
@@ -12,7 +12,7 @@ procedure Day2_2 is
       Input        : File_Type;
       Row_Idx      : Integer := 0;
    begin
-      Open (File => Input, Mode => In_File, Name => "data/day2.input");
+      Open (File => Input, Mode => In_File, Name => "data/day02.input");
       while not End_Of_File (Input) loop
          Current_Line   := Get_Line (Input);
          Row_Idx        := Row_Idx + 1;
@@ -69,4 +69,4 @@ begin
    end loop;
 
    Put_Line("The commonality between the strings is: " & Answer);
-end Day2_2;
+end Day02_2;
