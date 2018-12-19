@@ -1,6 +1,6 @@
 with Ada.Text_IO;           use Ada.Text_IO;
 with Ada.Strings.Unbounded;    use Ada.Strings.Unbounded;
-procedure Day19_1 is
+procedure Day19_2 is
    Number_Of_Instructions : constant Integer := 36;
 
    subtype Data_Line is Unbounded_String;
@@ -261,7 +261,7 @@ procedure Day19_1 is
    end Run;
 
    File        : Program;
-   Registers   : Register_Array := (others => 0);
+   Registers   : Register_Array := (0 => 1, others => 0);
    IP_Register : Register_Pointer;
 begin
    Load_File (Input_Program => File, IP_Register => IP_Register);
@@ -269,4 +269,4 @@ begin
    Run(Application => File, Memory => Registers, IP_Register => IP_Register);
 
    Put_Line("Value in register 0: " & Integer'Image(Registers(0)));
-end Day19_1;
+end Day19_2;
