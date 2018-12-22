@@ -219,9 +219,19 @@ procedure Day19_2 is
                  Memory : in out Register_Array;
                  IP_Register : in Register_Pointer) is
       IP : Integer := 0;
+      Tick : Integer := 0;
    begin
       while Memory(IP_Register) < Application'Length loop
          IP := Memory(IP_Register);
+         Put_Line("Executing instruction "
+                  & Instruction_Name'Image(Application(IP).Name)
+                  & " (" & Integer'Image(Memory(0))
+                  & "," & Integer'Image(Memory(1))
+                  & "," & Integer'Image(Memory(2))
+                  & "," & Integer'Image(Memory(3))
+                  & "," & Integer'Image(Memory(4))
+                  & ",[" & Integer'Image(IP) & "])");
+
          case Application(IP).Name is
             when addr => Addr(Instr  => Application(IP),
                               Memory => Memory);
@@ -257,6 +267,12 @@ procedure Day19_2 is
                               Memory => Memory);
          end case;
          Memory(IP_Register) := Memory(IP_Register) + 1;
+
+
+         if Tick = 105 then
+            Memory(4) := Memory(1) + 1;
+         end if;
+         Tick := Tick + 1;
       end loop;
    end Run;
 
