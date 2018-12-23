@@ -2,7 +2,7 @@ project Adventofcode is
 
    for Source_Dirs use ("src");
    for Object_Dir use "obj";
-   for Main use ("day22_1", "day21_1", "day20_1", "day19_2", "day19_1", "day18_2", "day18_1", "day16_2", "day16_1", "day14_2", "day14_1", "day13_2", "day13_1",  "day12_2", "day12_1", "day11_2", "day11_1", "day10_2", "day10_1", "day09_2", "day09_1", "day08_2", "day08_1", "day07_2", "day07_1", "day06_2", "day06_1", "day05_2", "day05_1", "day04_2", "day04_1",  "day03_2", "day03_1", "day02_2", "day02_1", "day01_2", "day01_1");
+   for Main use ("day23_1", "day22_1", "day21_1", "day20_1", "day19_2", "day19_1", "day18_2", "day18_1", "day16_2", "day16_1", "day14_2", "day14_1", "day13_2", "day13_1",  "day12_2", "day12_1", "day11_2", "day11_1", "day10_2", "day10_1", "day09_2", "day09_1", "day08_2", "day08_1", "day07_2", "day07_1", "day06_2", "day06_1", "day05_2", "day05_1", "day04_2", "day04_1",  "day03_2", "day03_1", "day02_2", "day02_1", "day01_2", "day01_1");
 
 end Adventofcode;
 
