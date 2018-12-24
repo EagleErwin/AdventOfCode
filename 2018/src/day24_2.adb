@@ -519,8 +519,10 @@ procedure Day24_2 is
    end Determine_Remaining_Units;
 
    Answer : Integer;
-   Finished : Boolean := False;
+   Finished : Boolean;
+   Tick : Integer;
    Winner : Side;
+   Maximum_Iterations : Integer := 100_000;
 
    Immune_System_Army : Army;
    Infection_Army     : Army;
@@ -528,24 +530,27 @@ begin
    Boost_Loop:
    for Boost in 0 .. Max_Boost loop
       Put_Line("Trying boost of " & Integer'Image(Boost));
-      if Boost = 58 then
-         Put_Line("Skipping boost 58, because it will never end.");
-      else
-         Finished := False;
-         Load_File (Immune_System_Army => Immune_System_Army,
-                    Infection_Army => Infection_Army,
-                    Boost => Boost);
+      Finished := False;
+      Tick := 0;
+      Load_File (Immune_System_Army => Immune_System_Army,
+                 Infection_Army => Infection_Army,
+                 Boost => Boost);
 
-         while not Finished loop
-            Finished := Fight(Immune_Army => Immune_System_Army,
-                              Infection_Army => Infection_Army);
-         end loop;
+      while not Finished loop
+         Finished := Fight(Immune_Army => Immune_System_Army,
+                           Infection_Army => Infection_Army);
+         Tick := Tick + 1;
+         if Tick > Maximum_Iterations then
+            Finished := True;
+         end if;
+      end loop;
 
+      if Tick < Maximum_Iterations then
          Answer := Determine_Remaining_Units(Immune_Army => Immune_System_Army,
                                              Infection_Army => Infection_Army,
                                              Winning_Side => Winner);
-         exit Boost_Loop when Winner = Immune;
       end if;
+      exit Boost_Loop when Winner = Immune;
    end loop Boost_Loop;
 
    Put_Line("Answer:" & Integer'Image(Answer));
