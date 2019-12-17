@@ -22,9 +22,6 @@ procedure Day12_2 is
       VX       : Velocity;
       VY       : Velocity;
       VZ       : Velocity;
-      X_Period : Integer;
-      Y_Period : Integer;
-      Z_Period : Integer;
    end record;
 
    type Space is array (1 .. Nr_Of_Moons) of Moon;
@@ -92,10 +89,7 @@ procedure Day12_2 is
                                   Z  => Curr_Z,
                                   VX => 0,
                                   VY => 0,
-                                  VZ => 0,
-                                  X_Period => -1,
-                                  Y_Period => -1,
-                                  Z_Period => -1);
+                                  VZ => 0);
       end loop Read_File_Loop;
       Close (File => Input);
    end Load_File;
@@ -134,64 +128,43 @@ procedure Day12_2 is
       end loop;
    end Update_Moon_Positions;
 
-   function Check_Initial_X_State (Moons   : in out Space;
-                                   Initial : in Space;
-                                   Step    : in Integer) return Boolean is
-      Result : Boolean := True;
+   function Check_Initial_X_State (Moons   : in Space;
+                                   Initial : in Space) return Boolean is
    begin
       for M in Moons'Range loop
-         if Moons(M).X_Period = -1 then -- Only update the period if it is not found yet.
-            if Moons(M).X = Initial(M).X and then
-              Moons(M).VX = Initial(M).VX then
-               Moons(M).X_Period := Step;
-               Put_Line("Found X-period for moon" & Integer'Image(M) & ":" & Integer'Image(Step));
-            else
-               Result := False;
-            end if;
+         if Moons(M).X /= Initial(M).X or else
+           Moons(M).VX /= Initial(M).VX then
+            return False;
          end if;
       end loop;
-      return Result;
+      return True;
    end Check_Initial_X_State;
 
-   function Check_Initial_Y_State (Moons   : in out Space;
-                                   Initial : in Space;
-                                   Step    : in Integer) return Boolean is
-      Result : Boolean := True;
+   function Check_Initial_Y_State (Moons   : in Space;
+                                   Initial : in Space) return Boolean is
    begin
       for M in Moons'Range loop
-         if Moons(M).Y_Period = -1 then -- Only update the period if it is not found yet.
-            if Moons(M).Y = Initial(M).Y and then
-              Moons(M).VY = Initial(M).VY then
-               Moons(M).Y_Period := Step;
-               Put_Line("Found Y-period for moon" & Integer'Image(M) & ":" & Integer'Image(Step));
-            else
-               Result := False;
-            end if;
+         if Moons(M).Y /= Initial(M).Y or else
+           Moons(M).VY /= Initial(M).VY then
+            return False;
          end if;
       end loop;
-      return Result;
+      return True;
    end Check_Initial_Y_State;
 
-   function Check_Initial_Z_State (Moons   : in out Space;
-                                   Initial : in Space;
-                                   Step    : in Integer) return Boolean is
-      Result : Boolean := True;
+   function Check_Initial_Z_State (Moons   : in Space;
+                                   Initial : in Space) return Boolean is
    begin
       for M in Moons'Range loop
-         if Moons(M).Y_Period = -1 then -- Only update the period if it is not found yet.
-            if Moons(M).Z = Initial(M).Z and then
-              Moons(M).VZ = Initial(M).VZ then
-               Moons(M).Z_Period := Step;
-               Put_Line("Found Z-period for moon" & Integer'Image(M) & ":" & Integer'Image(Step));
-            else
-               Result := False;
-            end if;
+         if Moons(M).Z /= Initial(M).Z or else
+           Moons(M).VZ /= Initial(M).VZ then
+            return False;
          end if;
       end loop;
-      return Result;
+      return True;
    end Check_Initial_Z_State;
 
-   function Run(Moons : in out Space) return Integer is
+   function Run(Moons : in out Space) return Long_Integer is
       Result : Integer := 0;
       Found_X : Boolean := False;
       Found_Y : Boolean := False;
@@ -214,22 +187,19 @@ procedure Day12_2 is
          Print_Moons(Step => I, Moons => Moons);
 
          if not Found_X and then Check_Initial_X_State(Moons   => Moons,
-                                                       Initial => Initial_Moon_State,
-                                                       Step    => I) then
+                                                       Initial => Initial_Moon_State) then
             X_Period := I;
             Found_X := True;
             Put_Line("Found all periods of X: " & Integer'Image(X_Period));
          end if;
          if not Found_Y and then Check_Initial_Y_State(Moons   => Moons,
-                                                       Initial => Initial_Moon_State,
-                                                       Step    => I) then
+                                                       Initial => Initial_Moon_State) then
             Y_Period := I;
             Found_Y := True;
             Put_Line("Found all periods of Y: " & Integer'Image(Y_Period));
          end if;
          if not Found_Z and then Check_Initial_Z_State(Moons   => Moons,
-                                                       Initial => Initial_Moon_State,
-                                                       Step    => I) then
+                                                       Initial => Initial_Moon_State) then
             Z_Period := I;
             Found_Z := True;
             Put_Line("Found all periods of Z: " & Integer'Image(Z_Period));
@@ -242,15 +212,18 @@ procedure Day12_2 is
             exit Step_Loop;
          end if;
       end loop Step_Loop;
-      return X_Period * Y_Period * Z_Period;
+      -- TODO: This should be the least common multiple
+      return Long_Integer(Long_Integer(X_Period) * Long_Integer(Y_Period) * Long_Integer(Z_Period));
    end Run;
 
    Subjects : Space;
-   Answer : Integer;
+   Answer   : Long_Integer;
 begin
    Load_File (Moons => Subjects);
 
    Answer := Run(Moons => Subjects);
 
-   Put_Line("Cycle detected after " & Integer'Image(Answer) & " steps");
+   Put_Line("Cycle detected after " & Long_Integer'Image(Answer) & " steps");
+   --5193892913996544 too high
+   --324618307124784 might be it
 end Day12_2;
