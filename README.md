@@ -6,4 +6,4 @@ Before I started this event in 2018, I had only a few hours of hands-on experien
 
 Due to my lack of experience, I don't expect my solutions to be efficient in any way (calculation time, memory usage, development time etc.). My main concern is getting the right answer (for my input data) by just using Ada as a programming language.
 
-I had great fun during Advent of Code in 2018 and therefore I decided to refresh my Ada knowledge by participating in the 2019 edition as well.
+I had great fun during Advent of Code in 2018 and 2019 and therefore I decided to refresh my Ada knowledge again by participating in the 2020 edition as well.
