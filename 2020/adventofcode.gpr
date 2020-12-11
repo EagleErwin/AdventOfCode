@@ -21,6 +21,7 @@ project Adventofcode is
                  "day09_1",
                  "day09_2",
                  "day10_1",
-                 "day10_2");
+                 "day10_2",
+                 "day11_1");
 end Adventofcode;
 
