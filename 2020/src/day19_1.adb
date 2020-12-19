@@ -7,7 +7,7 @@ with GNAT.Regexp;                use GNAT.Regexp;
 
 procedure Day19_1 is
    -- ### CONSTANTS ### --
-   Enable_Debug    : constant Boolean := True;
+   Enable_Debug    : constant Boolean := False;
    Number_Of_Rules : constant Integer := 138;
 
    -- ### TYPE DEFINITIONS ### --
@@ -163,17 +163,25 @@ procedure Day19_1 is
    end Load_File;
 
    -- Converts the rule to a regex pattern
-   function To_Regex_String(Rule : Rule_Access;
+   function To_Regex_String(Rule  : Rule_Access;
                             Rules : Rules_Map.Map) return Unbounded_String is
    begin
       if Rule.Char = 'a' or else Rule.Char = 'b' then
          -- Single character
          return To_Unbounded_String((1 => Rule.Char));
       elsif Rule.Constraint_1_Last = null then
-         -- N (Single rule)
-         return To_Unbounded_String(To_String(
-                                    To_Regex_String(Rule.Constraint_1_First, Rules)
-                                   ));
+         if Rule.Constraint_2_First = null then
+            -- N (Single rule)
+            return To_Unbounded_String(To_String(
+                                       To_Regex_String(Rule.Constraint_1_First, Rules)
+                                      ));
+         else
+            -- N|X (Two single rules)
+            return To_Unbounded_String("(" & To_String(
+                                       To_Regex_String(Rule.Constraint_1_First, Rules)
+                                       & "|" & To_Regex_String(Rule.Constraint_2_First, Rules) & ")"
+                                      ));
+         end if;
       elsif Rule.Constraint_2_First = null then
          -- NM (Two subsequent rules)
          return To_Unbounded_String(To_String(
@@ -181,6 +189,7 @@ procedure Day19_1 is
                                     & To_Regex_String(Rule.Constraint_1_Last, Rules)
                                    ));
       elsif Rule.Constraint_2_Last = null then
+         -- This case is not in my input
          -- NM|X
          return To_Unbounded_String("(" & To_String(
                                     To_Regex_String(Rule.Constraint_1_First, Rules)
@@ -199,6 +208,7 @@ procedure Day19_1 is
                                    ) & ")");
       end if;
    end To_Regex_String;
+
 
    Rules      : Rules_Map.Map;
    Messages   : Message_Vector.Vector;
