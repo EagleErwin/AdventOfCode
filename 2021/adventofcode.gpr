@@ -5,6 +5,7 @@ project Adventofcode is
    for Main use ("day01_1",
                  "day01_2",
                  "day02_1",
-                 "day02_2");
+                 "day02_2",
+                 "day03_1");
 end Adventofcode;
 
