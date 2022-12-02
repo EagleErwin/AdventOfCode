@@ -4,6 +4,7 @@ project Adventofcode is
    for Object_Dir use "obj";
    for Main use ("day01_1",
                  "day01_2",
-                 "day02_1");
+                 "day02_1",
+                 "day02_2");
 end Adventofcode;
 
