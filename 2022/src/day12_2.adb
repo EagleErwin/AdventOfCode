@@ -22,11 +22,9 @@ procedure Day12_2 is
       Column : Integer;
    end record;
 
-   type Coordinate_Array is array (1 .. Max_Distance) of Coordinate;
-
    -- ## GLOBAL VARIABLES ## --
-   Nr_Of_Start_Positions : Integer := 0;
-   Start_Positions       : Coordinate_Array := (others => (0, 0));
+   Start       : Coordinate := (0, 0);
+   Destination : Coordinate := (0, 0);
 
    function Get_Location_Object (Input_Char : in Character;
                                  Position   : in Coordinate)
@@ -37,18 +35,14 @@ procedure Day12_2 is
          when 'S' =>
             Result.Elevation            := Character'Pos('a');
             Result.Steps_To_Destination := Max_Distance;
-            Nr_Of_Start_Positions := Nr_Of_Start_Positions + 1;
-            Start_Positions(Nr_Of_Start_Positions) := Position;
+            Start := Position;
          when 'E' =>
             Result.Elevation            := Character'Pos('z');
             Result.Steps_To_Destination := 0;
+            Destination := Position;
          when others =>
             Result.Elevation            := Character'Pos(Input_Char);
             Result.Steps_To_Destination := Max_Distance;
-            if (Input_Char = 'a') then
-               Nr_Of_Start_Positions := Nr_Of_Start_Positions + 1;
-               Start_Positions(Nr_Of_Start_Positions) := Position;
-            end if;
       end case;
 
       return Result;
@@ -123,19 +117,6 @@ procedure Day12_2 is
       return Updated;
    end Walk_Iteration;
 
-   function Copy_Map (Data_To_Copy : in Height_Map) return Height_Map is
-      Result : Height_Map;
-   begin
-      Row_Loop:
-      for Y in 1 .. Map_Height loop
-         Col_Loop:
-         for X in 1 .. Map_Width loop
-            Result(Y)(X) := Data_To_Copy(Y)(X);
-         end loop Col_Loop;
-      end loop Row_Loop;
-      return Result;
-   end Copy_Map;
-
    procedure Print_Map (Data_To_Print : in Height_Map) is
    begin
       Row_Loop:
@@ -148,36 +129,44 @@ procedure Day12_2 is
       end loop Row_Loop;
    end Print_Map;
 
-   Original_Hill : Height_Map;
+   function Find_Best_Start (Hill : in Height_Map) return Coordinate is
+      Best_Position     : Coordinate;
+      Best_Distance     : Integer := Max_Distance;
+      Current_Elevation : Integer;
+      Current_Distance  : Integer;
+   begin
+      Row_Loop:
+      for Y in 1 .. Map_Height loop
+         Col_Loop:
+         for X in 1 .. Map_Width loop
+            Current_Elevation := Hill(Y)(X).Elevation;
+            if (Current_Elevation = Character'Pos('a')) then
+               Current_Distance := Hill(Y)(X).Steps_To_Destination;
+               if (Current_Distance < Best_Distance) then
+                  Best_Distance := Current_Distance;
+                  Best_Position := (Y, X);
+               end if;
+            end if;
+         end loop Col_Loop;
+      end loop Row_Loop;
+      return Best_Position;
+   end Find_Best_Start;
+
    Hill   : Height_Map;
 
-   Start_Position : Coordinate;
-   Current_Distance : Integer;
-   Answer : Integer := Max_Distance;
+   Best_Start : Coordinate;
+   Answer     : Integer := 0;
 begin
-   Load_File(Original_Hill);
+   Load_File(Hill);
 
-   Start_Position_Loop:
-   for I in 1 .. Nr_Of_Start_Positions loop
-      Start_Position := Start_Positions(I);
-      Put("Checking (" & Integer'Image(Start_Position.Row) & ","
-               & Integer'Image(Start_Position.Column) & ")... ");
-      Hill := Copy_Map(Original_Hill);
-      Update_Distances_Loop:
-      while Walk_Iteration(Hill) loop
-         --Put_Line("Iteration...");
-         --Print_Map(Hill);
-         null;
-      end loop Update_Distances_Loop;
-      Current_Distance :=
-        Hill(Start_Position.Row)(Start_Position.Column).Steps_To_Destination;
-      Put(Integer'Image(Current_Distance));
-      if Current_Distance < Answer then
-         Put(" -> Best candidate so far!");
-         Answer := Current_Distance;
-      end if;
-      Put_Line("");
-   end loop Start_Position_Loop;
+   Update_Distances_Loop:
+   while Walk_Iteration(Hill) loop
+      null;
+   end loop Update_Distances_Loop;
+
+   Best_Start := Find_Best_Start(Hill);
+
+   Answer := Hill(Best_Start.Row)(Best_Start.Column).Steps_To_Destination;
 
    Put_Line("The fewest steps required to move to the best signal location is"
             & Integer'Image(Answer));
