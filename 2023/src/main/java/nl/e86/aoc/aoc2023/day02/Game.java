@@ -33,6 +33,29 @@ public class Game {
         return result;
     }
 
+    /**
+     * Returns the fewest number of cubes that makes this game possible.
+     * @return the fewest number of cubes.
+     */
+    public int calculatePower() {
+        int minRed = 0;
+        int minGreen = 0;
+        int minBlue = 0;
+        for (Draw currentDraw : draws) {
+            if (currentDraw.red > minRed) {
+                minRed = currentDraw.red;
+            }
+            if (currentDraw.green > minGreen) {
+                minGreen = currentDraw.green;
+            }
+            if (currentDraw.blue > minBlue) {
+                minBlue = currentDraw.blue;
+            }
+        }
+
+        return minRed * minGreen * minBlue;
+    }
+
     public static Game createFromString(String inputLine) {
         Game result;
         // Game 60: 6 blue; 11 blue, 2 red, 6 green; 1 red, 3 blue; 2 green, 1 blue, 2 red

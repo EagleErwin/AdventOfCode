@@ -9,4 +9,17 @@ public class Day02Test {
         int output = Day02.calculatePart1("day02.1.input");
         Assert.assertEquals(8, output);
     }
+
+    @Test
+    public void testDay02_2() {
+        int output = Day02.calculatePart2("day02.1.input");
+        Assert.assertEquals(2286, output);
+    }
+
+    @Test
+    public void testDay02_wrong_answers() {
+        int output = Day02.calculatePart2("day02.input");
+        Assert.assertTrue(output < 125622);
+    }
+
 }

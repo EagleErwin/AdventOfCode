@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Day02 {
-    private static final List<Game> GAMES = new ArrayList<>();
+    private final List<Game> games = new ArrayList<>();
+
+    private Day02() {
+        // Prevent instantiation.
+    }
+
     public static void main(String[] args) {
         String inputDataFile = "day02.input";
         System.out.println("Part 1: " + calculatePart1(inputDataFile));
@@ -14,14 +19,10 @@ public class Day02 {
     }
 
     public static int calculatePart1(String filename) {
-        List<String> inputData = InputDataReader.readInput(filename);
-        for (String inputLine : inputData) {
-            Game currentGame = Game.createFromString(inputLine);
-            GAMES.add(currentGame);
-        }
+        Day02 puzzle = createPuzzle(filename);
 
         int sum = 0;
-        for (Game game : GAMES) {
+        for (Game game : puzzle.games) {
             if (game.isValid()) {
                 sum += game.getId();
             }
@@ -30,11 +31,22 @@ public class Day02 {
     }
 
     public static int calculatePart2(String filename) {
+        Day02 puzzle = createPuzzle(filename);
+        int sum = 0;
+        for (Game game : puzzle.games) {
+            int gamePower = game.calculatePower();
+            sum += gamePower;
+    }
+        return sum;
+    }
+
+    private static Day02 createPuzzle(String filename) {
+        Day02 puzzle = new Day02();
         List<String> inputData = InputDataReader.readInput(filename);
         for (String inputLine : inputData) {
             Game currentGame = Game.createFromString(inputLine);
-            GAMES.add(currentGame);
+            puzzle.games.add(currentGame);
         }
-        return -1;
+        return puzzle;
     }
 }
