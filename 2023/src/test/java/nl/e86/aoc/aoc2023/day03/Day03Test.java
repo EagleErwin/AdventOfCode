@@ -39,6 +39,26 @@ public class Day03Test {
         int output = Day03.calculatePart1("day03.input");
         Assert.assertTrue("The answer " + output + " should be larger than " + 540037, 540037 < output);
         Assert.assertTrue("The answer " + output + " should be larger than " + 540131, 540131 < output);
-
     }
+
+    @Test
+    public void testDay03_2() {
+        int output = Day03.calculatePart2("day03.1.input");
+        Assert.assertEquals(467835, output);
+    }
+
+    @Test
+    public void testDay03_2_something() {
+        int output = Day03.calculatePart2("day03.6.input");
+        Assert.assertEquals(633 * 181, output);
+    }
+
+    @Test
+    public void testDay03_2_wrong_answers() {
+        int output = Day03.calculatePart2("day03.input");
+        //Assert.assertTrue("The answer " + output + " should be smaller than " + 453793542, 453793542 > output);
+        Assert.assertTrue("The answer " + output + " should be higher than " + 71712868, 71712868 < output);
+    }
+
+
 }

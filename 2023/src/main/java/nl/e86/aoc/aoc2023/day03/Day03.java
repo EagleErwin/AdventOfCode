@@ -25,7 +25,7 @@ public class Day03 {
     public static int calculatePart2(String filename) {
         Day03 puzzle = createPuzzle(filename);
 
-        return -1;
+        return puzzle.inputSchematic.getSolutionPt2();
     }
 
     private static Day03 createPuzzle(String filename) {

@@ -21,6 +21,123 @@ public class Schematic {
         return sum;
     }
 
+    public int getSolutionPt2() {
+        int sum = 0;
+        for (Gear gear : findGears()) {
+            int ratio = gear.calculateRatio(schematicRepresentation);
+            sum += ratio;
+        }
+        return sum;
+    }
+
+    private List<Gear> findGears() {
+        List<Gear> result = new ArrayList<>();
+        for (int rowIndex = 0; rowIndex < getLength(); ++rowIndex) {
+            String rowString = schematicRepresentation.get(rowIndex);
+            for (int colIndex = 0; colIndex < rowString.length(); ++colIndex) {
+                if (rowString.charAt(colIndex) == Gear.GEAR_SYMBOL) {
+                    Gear candiateGear = new Gear(rowIndex, colIndex);
+                    if (hasExactlyTwoPartNumberAround(candiateGear)) {
+                        result.add(candiateGear);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private boolean hasExactlyTwoPartNumberAround(Gear candidate) {
+        int numberOfAdjacentParts = 0;
+        int startRowIndex = candidate.getRow() - 1;
+        int stopRowIndex = candidate.getRow() + 1;
+
+        int startColIndex = candidate.getCol() - 1;
+        int stopColIndex = candidate.getCol() + 1;
+
+        // 1 2 3
+        // 4   5
+        // 6 7 8
+        Character c1 = null;
+        Character c2 = null;
+        Character c3 = null;
+        Character c4 = null;
+        Character c5 = null;
+        Character c6 = null;
+        Character c7 = null;
+        Character c8 = null;
+
+        if (startRowIndex >= 0) {
+            String rowAbove = schematicRepresentation.get(startRowIndex);
+            if (startColIndex >= 0) {
+                c1 = rowAbove.charAt(startColIndex);
+            }
+            c2 = rowAbove.charAt(candidate.getCol());
+            if (stopColIndex < rowAbove.length()) {
+                c3 = rowAbove.charAt(stopColIndex);
+            }
+        }
+        String currentRow = schematicRepresentation.get(candidate.getRow());
+        if (startColIndex >= 0) {
+            c4 = currentRow.charAt(startColIndex);
+        }
+        if (stopColIndex < currentRow.length()) {
+            c5 = currentRow.charAt(stopColIndex);
+        }
+        if (stopRowIndex < getLength()) {
+            String rowBelow = schematicRepresentation.get(stopRowIndex);
+            if (startColIndex >= 0) {
+                c6 = rowBelow.charAt(startColIndex);
+            }
+            c7 = rowBelow.charAt(candidate.getCol());
+            if (stopColIndex < rowBelow.length()) {
+                c8 = rowBelow.charAt(stopColIndex);
+            }
+        }
+
+        if (isNumber(c1)) {
+            if (!isNumber(c2) && isNumber(c3)) {
+                // N . N
+                // ? * ?
+                // ? ? ?
+                numberOfAdjacentParts = numberOfAdjacentParts + 2;
+            } else {
+                // N N _  // N . .
+                // ? * ?  // ? * ?
+                // ? ? ?  // ? ? ?
+                numberOfAdjacentParts++;
+            }
+        } else {
+            if (isNumber(c2) || isNumber(c3)) {
+                // . . N // . N N // . N .
+                numberOfAdjacentParts++;
+            }
+        }
+
+        if (isNumber(c4)) {
+            numberOfAdjacentParts++;
+        }
+        if (isNumber(c5)) {
+            numberOfAdjacentParts++;
+        }
+
+        if (isNumber(c6)) {
+            if (!isNumber(c7) && isNumber(c8)) {
+                // N . N
+                numberOfAdjacentParts = numberOfAdjacentParts + 2;
+            } else {
+                // N N _  // N . .
+                numberOfAdjacentParts++;
+            }
+        } else {
+            if (isNumber(c7) || isNumber(c8)) {
+                // . . N // . N N // . N .
+                numberOfAdjacentParts++;
+            }
+        }
+
+        return numberOfAdjacentParts == 2;
+    }
+
     private List<Integer> getPartNumbersForRow(int row) {
         List<Integer> result = new ArrayList<>();
 
@@ -96,7 +213,8 @@ public class Schematic {
         return character != '.' && !isNumber(character);
     }
 
-    private static boolean isNumber(char character) {
+    private static boolean isNumber(Character character) {
+        if (character == null) { return false; }
         try {
             Integer.parseInt(character + "");
             return true;
@@ -109,4 +227,3 @@ public class Schematic {
         return schematicRepresentation.size();
     }
 }
-
