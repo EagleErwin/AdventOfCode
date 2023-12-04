@@ -10,5 +10,9 @@ public class Day04Test {
         Assert.assertEquals(13, output);
     }
 
-
+    @Test
+    public void testDay04_2() {
+        int output = Day04.calculatePart2("day04.1.input");
+        Assert.assertEquals(30, output);
+    }
 }

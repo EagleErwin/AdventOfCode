@@ -13,7 +13,7 @@ public class Pile {
         return getScore();
     }
     public int getSolutionPt2() {
-        return -1;
+        return winCards();
     }
 
     private int getScore() {
@@ -22,6 +22,34 @@ public class Pile {
             score += card.getScore();
         }
         return score;
+    }
+
+    private int winCards() {
+        int totalCards = 0;
+        int cardIndex = 0;
+        while (cardIndex < cards.size()) {
+            ScratchCard currentCard = cards.get(cardIndex);
+            totalCards++;
+            int extraCards = currentCard.getExtraCards();
+            for (int i = 1; i <= extraCards; ++i) {
+                ScratchCard extraCard = duplicateCard(currentCard.getCardNumber() + i);
+                cards.add(extraCard);
+            }
+            cardIndex++;
+        }
+        return totalCards;
+    }
+
+    private ScratchCard duplicateCard(int cardId) {
+        ScratchCard match = null;
+        for (ScratchCard card : cards) {
+            if (card.getCardNumber() == cardId) {
+                match = card.getCopy();
+                break;
+            }
+        }
+
+        return match;
     }
 
     public static Pile createFromInput(List<String> input) {

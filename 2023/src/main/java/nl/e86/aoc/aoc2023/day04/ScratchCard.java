@@ -10,14 +10,18 @@ public class ScratchCard {
     private static final Pattern CARD_NUMBER_PATTERN = Pattern.compile("Card\\s*(\\d+):");
     private static final Pattern WINNING_NUMBERS_PATTERN = Pattern.compile(":(.*)\\|");
     private static final Pattern NUMBERS_ON_CARD_PATTERN = Pattern.compile("\\|(.*)$");
-    private final Integer cardNumber;
+    private final int cardNumber;
     private final List<Integer> winningNumbers;
     private final List<Integer> numbersOnCard;
 
-    private ScratchCard(Integer cardNumber, List<Integer> winningNumbers, List<Integer> numbersOnCard) {
+    private ScratchCard(int cardNumber, List<Integer> winningNumbers, List<Integer> numbersOnCard) {
         this.cardNumber = cardNumber;
         this.winningNumbers = Collections.unmodifiableList(winningNumbers);
         this.numbersOnCard = Collections.unmodifiableList(numbersOnCard);
+    }
+
+    public int getCardNumber() {
+        return cardNumber;
     }
 
     public int getScore() {
@@ -34,10 +38,24 @@ public class ScratchCard {
         return score;
     }
 
+    public int getExtraCards() {
+        int extraCards = 0;
+        for (Integer number : numbersOnCard) {
+            if (winningNumbers.contains(number)) {
+                extraCards++;
+            }
+        }
+        return extraCards;
+    }
+
+    public ScratchCard getCopy() {
+        return new ScratchCard(cardNumber, winningNumbers, numbersOnCard);
+    }
+
     public static ScratchCard createCardFromInputData(String input) {
         Matcher cardNumberMatcher = CARD_NUMBER_PATTERN.matcher(input);
         cardNumberMatcher.find();
-        Integer cardNumber = Integer.parseInt(cardNumberMatcher.group(1));
+        int cardNumber = Integer.parseInt(cardNumberMatcher.group(1));
 
         Matcher winningNumbersMatcher = WINNING_NUMBERS_PATTERN.matcher(input);
         winningNumbersMatcher.find();
