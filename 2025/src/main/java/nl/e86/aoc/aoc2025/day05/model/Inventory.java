@@ -2,6 +2,7 @@ package nl.e86.aoc.aoc2025.day05.model;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public final class Inventory {
 
@@ -31,5 +32,30 @@ public final class Inventory {
             }
         }
         return amount;
+    }
+
+    public long countIngredientsConsideredFresh() {
+        long amount = 0;
+        Set<Range> freshIngredients = new TreeSet<>();
+        for (Range range : new TreeSet<>(ranges)) {
+            addRange(freshIngredients, range);
+        }
+        for (Range freshIngredient : freshIngredients) {
+            amount += freshIngredient.getSize();
+        }
+        return amount;
+    }
+
+    private static void addRange(Set<Range> freshIngredients, Range range) {
+        boolean merged = false;
+        for (Range freshIngredient : freshIngredients) {
+            if (freshIngredient.merge(range)) {
+                merged = true;
+                break;
+            }
+        }
+        if (!merged) {
+            freshIngredients.add(range);
+        }
     }
 }

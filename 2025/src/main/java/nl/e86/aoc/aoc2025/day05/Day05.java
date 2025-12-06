@@ -29,10 +29,21 @@ public class Day05 {
 
     public static String calculatePart2(String filename) {
         List<String> input = InputDataReader.readInput(filename);
-        int sum = 0;
+        long sum;
+        boolean parseRanges = true;
+        Inventory inventory = new Inventory();
         for (String line : input) {
-            // nop
+            if (line.isEmpty()) {
+                parseRanges = false;
+                continue;
+            }
+            if (parseRanges) {
+                inventory.addRange(new Range(line));
+            } else {
+               break;
+            }
         }
+        sum = inventory.countIngredientsConsideredFresh();
         return String.valueOf(sum);
     }
 
