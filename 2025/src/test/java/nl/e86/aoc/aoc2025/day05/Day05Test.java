@@ -16,8 +16,6 @@ public class Day05Test {
         Assert.assertEquals(14L, Long.parseLong(output));
     }
 
-    // 330579068691085 too low
-
     @Test
     public void testDay05_real_input() {
         String output = Day05.calculatePart2("day05.input");
