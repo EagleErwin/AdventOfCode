@@ -20,10 +20,44 @@ public class Warehouse {
         }
     }
 
+    private Warehouse(Set<Position> paperRollLocations) {
+        this.paperRollLocations.addAll(paperRollLocations);
+    }
+
+    public int getNumberOfRolls() {
+        return this.paperRollLocations.size();
+    }
+
     public int getAccessibleRolls(int limitOfAdjacentRolls) {
         return (int) paperRollLocations.stream()
                 .filter(n -> this.getNumberOfAdjacentRolls(n) < limitOfAdjacentRolls)
                 .count();
+    }
+
+    public int getNumberOfRemovedRolls(int limitOfAdjacentRolls) {
+        int result = 0;
+        int numberOfRolls = getNumberOfRolls();
+        int removedRolls;
+        Warehouse step = this;
+        do {
+            step = step.reduce(limitOfAdjacentRolls);
+            removedRolls = numberOfRolls - step.getNumberOfRolls();
+            result += removedRolls;
+            numberOfRolls = step.getNumberOfRolls();
+        } while (removedRolls != 0);
+        return result;
+    }
+
+    private Warehouse reduce(int limitOfAdjacentRolls) {
+        Warehouse result = new Warehouse(paperRollLocations);
+        paperRollLocations.stream()
+                .filter(n -> this.getNumberOfAdjacentRolls(n) < limitOfAdjacentRolls)
+                .forEach(result::removeRoll);
+        return result;
+    }
+
+    private void removeRoll(Position p) {
+        this.paperRollLocations.remove(p);
     }
 
     private int getNumberOfAdjacentRolls(Position p) {

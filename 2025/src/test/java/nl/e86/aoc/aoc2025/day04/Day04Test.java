@@ -21,6 +21,6 @@ public class Day04Test {
     @Test
     public void testDay04_2() {
         String output = Day04.calculatePart2("day04.1.input");
-        Assert.assertEquals(0L, Long.parseLong(output));
+        Assert.assertEquals(43L, Long.parseLong(output));
     }
 }

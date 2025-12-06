@@ -15,10 +15,8 @@ public class Day04 {
 
     public static String calculatePart2(String filename) {
         List<String> input = InputDataReader.readInput(filename);
-        long sum = 0;
-        for (String line : input) {
-            // nop
-        }
+        Warehouse warehouse = new Warehouse(input);
+        int sum = warehouse.getNumberOfRemovedRolls(4);
         return String.valueOf(sum);
     }
 
