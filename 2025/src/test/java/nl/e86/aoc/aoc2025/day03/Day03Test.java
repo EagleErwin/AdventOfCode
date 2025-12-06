@@ -9,4 +9,10 @@ public class Day03Test {
         String output = Day03.calculatePart1("day03.1.input");
         Assert.assertEquals(357L, Long.parseLong(output));
     }
+
+    @Test
+    public void testDay03_2() {
+        String output = Day03.calculatePart2("day03.1.input");
+        Assert.assertEquals(3121910778619L, Long.parseLong(output));
+    }
 }

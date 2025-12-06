@@ -14,25 +14,37 @@ public class BatteryBank {
                 .collect(Collectors.toList());
     }
 
-    public int getMaxJoltage() {
+    public long getMaxJoltage(short numberOfBatteries) {
+        short batteryPosition = 0;
+        long result = 0;
+        for (short i = numberOfBatteries; i > 0; --i) {
+            Battery bestBattery = getBestBattery(i, batteryPosition);
+            result += bestBattery.joltage * Math.pow(10, (i-1));
+            batteryPosition = (short)(bestBattery.position + 1);
+        }
+        return result;
+    }
+
+    private Battery getBestBattery(short amount, short startValue) {
         short maxValue = 0;
         short bestPosition = 0;
-        // Take the highest number from all the batteries but the last.
-        for (short i = 0; i < batteries.size() - 1; ++i) {
+        for (short i = startValue; i < batteries.size() - (amount - 1); ++i) {
             short currentValue = batteries.get(i);
             if (currentValue > maxValue) {
                 maxValue = currentValue;
                 bestPosition = i;
             }
         }
+        return new Battery(bestPosition, maxValue);
+    }
 
-        short bestSecond = 0;
-        for (int i = bestPosition + 1; i < batteries.size(); ++i) {
-            short currentValue = batteries.get(i);
-            if (currentValue > bestSecond) {
-                bestSecond = currentValue;
-            }
+    private final class Battery {
+        private final short position;
+        private final short joltage;
+
+        private Battery(short position, short joltage) {
+            this.position = position;
+            this.joltage = joltage;
         }
-        return maxValue * 10 + bestSecond;
     }
 }

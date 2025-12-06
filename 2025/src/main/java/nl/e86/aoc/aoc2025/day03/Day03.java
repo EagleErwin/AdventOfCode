@@ -11,16 +11,17 @@ public class Day03 {
         int sum = 0;
         for (String line : input) {
             BatteryBank bank = new BatteryBank(line);
-            sum += bank.getMaxJoltage();
+            sum += bank.getMaxJoltage((short)2);
         }
         return String.valueOf(sum);
     }
 
     public static String calculatePart2(String filename) {
         List<String> input = InputDataReader.readInput(filename);
-        int sum = 0;
+        long sum = 0;
         for (String line : input) {
-            //nop
+            BatteryBank bank = new BatteryBank(line);
+            sum += bank.getMaxJoltage((short)12);
         }
         return String.valueOf(sum);
     }
