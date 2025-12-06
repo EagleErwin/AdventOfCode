@@ -1,6 +1,5 @@
-package nl.e86.aoc.aoc2025.day01;
+package nl.e86.aoc.aoc2025.day02;
 
-import nl.e86.aoc.aoc2025.day02.Day02;
 import org.junit.Assert;
 import org.junit.Test;
 
