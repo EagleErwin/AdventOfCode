@@ -31,7 +31,26 @@ public class Day02 {
         return String.valueOf(sum);
     }
 
+    public static String calculatePart2(String filename) {
+        List<String> input = InputDataReader.readInput(filename);
+        final AtomicLong sum = new AtomicLong(0);
+        List<Range> ranges = Collections.emptyList();
+        for (String line : input) {
+            Matcher matcher = RANGE_PATERN.matcher(line);
+            ranges = matcher.results()
+                    .map(MatchResult::group)
+                    .map(Range::new)
+                    .toList();
+        }
+        ranges.stream()
+                .map(Range::getInvalidIdsExtended)
+                .flatMap(Collection::stream)
+                .forEach(sum::addAndGet);
+        return String.valueOf(sum);
+    }
+
     public static void main(String[] args) {
         System.out.println("Part 1: " + calculatePart1("day02.input"));
+        System.out.println("Part 2: " + calculatePart2("day02.input"));
     }
 }

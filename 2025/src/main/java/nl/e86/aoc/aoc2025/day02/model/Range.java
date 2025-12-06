@@ -3,6 +3,7 @@ package nl.e86.aoc.aoc2025.day02.model;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -28,11 +29,32 @@ public class Range {
                 .collect(Collectors.toSet());
     }
 
+    public Set<Long> getInvalidIdsExtended() {
+        return LongStream.range(begin, end + 1)
+                .boxed()
+                .filter(id -> !Range.isValidExtended(id))
+                .collect(Collectors.toSet());
+    }
+
     private static boolean isValid(long id) {
         String idAsString = String.valueOf(id);
         if (idAsString.length() % 2 == 0) {
             String firstHalf = idAsString.substring(0, idAsString.length() / 2);
             return !(idAsString.equals(firstHalf + firstHalf));
+        }
+
+        return true;
+    }
+
+    private static boolean isValidExtended(long id) {
+        String idAsString = String.valueOf(id);
+
+        for (int i = 1; i <= (idAsString.length() / 2); ++i) {
+            String subStr = idAsString.substring(0, i);
+            Pattern matchPattern = Pattern.compile("^(" + subStr + ")+$");
+            if (matchPattern.matcher(idAsString).matches()) {
+                return false;
+            }
         }
 
         return true;
