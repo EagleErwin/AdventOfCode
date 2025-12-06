@@ -20,6 +20,6 @@ public class Day06Test {
     @Test
     public void testDay06_2() {
         String output = Day06.calculatePart2("day06.1.input");
-        Assert.assertEquals(0L, Long.parseLong(output));
+        Assert.assertEquals(3263827L, Long.parseLong(output));
     }
 }

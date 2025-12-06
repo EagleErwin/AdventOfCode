@@ -9,6 +9,10 @@ public class Worksheet {
     List<Problem> problems = new ArrayList<>();
 
     public Worksheet(List<String> input) {
+        this(input, false);
+    }
+
+    public Worksheet(List<String> input, boolean leftToRight) {
         Set<Integer> separators = findSeparators(input);
         int numRows = input.size();
         int beginIndex = 0;
@@ -18,16 +22,16 @@ public class Worksheet {
                 numbers.add(input.get(i).substring(beginIndex, separator));
             }
             String operator = input.get(numRows - 1).substring(beginIndex, separator);
-            this.problems.add(new Problem(numbers, operator));
+            this.problems.add(new Problem(numbers, operator, leftToRight));
             beginIndex = separator + 1;
         }
         // We miss the last one.
         List<String> numbers = new ArrayList<>();
         for (int i = 0; i < numRows - 1; ++i) {
-            numbers.add(input.get(i).substring(beginIndex).trim());
+            numbers.add(input.get(i).substring(beginIndex));
         }
-        String operator = input.get(numRows - 1).substring(beginIndex).trim();
-        this.problems.add(new Problem(numbers, operator));
+        String operator = input.get(numRows - 1).substring(beginIndex);
+        this.problems.add(new Problem(numbers, operator, leftToRight));
     }
 
     private static Set<Integer> findSeparators(List<String> input) {

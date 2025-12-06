@@ -15,10 +15,8 @@ public class Day06 {
 
     public static String calculatePart2(String filename) {
         List<String> input = InputDataReader.readInput(filename);
-        int sum = 0;
-        for (String line : input) {
-            // nop
-        }
+        Worksheet worksheet = new Worksheet(input, true);
+        Long sum = worksheet.getGrandTotal();
         return String.valueOf(sum);
     }
 
